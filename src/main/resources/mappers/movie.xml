@@ -9,4 +9,15 @@
 	</select>
 
 
+   <insert id="insert" parameterType="com.oraclejava.react.api.model.Movie">
+      insert into movie(movie_id, title, price, synopsis, movie_picture)
+      values (movie_seq.nextval, #{title}, #{price}, #{synopsis},  #{movie_picture, jdbcType=VARCHAR})
+   </insert>
+
+	<select id="findById" parameterType="int" resultType="com.oraclejava.react.api.model.Movie" >
+	select movie_id, title, price,synopsis,movie_picture from movie 
+	where movie_id = #{id}
+	</select>
+
+	
 </mapper>

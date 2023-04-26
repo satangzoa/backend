@@ -14,4 +14,41 @@ public class MovieRepository {
 	public List<Movie> list() {
 		return sqlSession.selectList("movie.list");
 	}
+	
+	public void insert(Movie movie) { //void는 return 값이 없다
+		sqlSession.insert("movie.insert" , movie);
+	}
+	
+	public Movie findById(int movid_id) {
+		return sqlSession.selectOne("movie.findById", movid_id);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
