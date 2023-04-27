@@ -10,7 +10,7 @@ import lombok.Setter;
 public class Movie { //movie 테이블
 	
 	
-	private int movie_id;
+	private Integer movie_id;
 	private String title; //영화제목
 	private int price; //가격
 	private String synopsis; //줄거리

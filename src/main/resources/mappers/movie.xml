@@ -8,16 +8,81 @@
 	select movie_id, title, price from movie order by title
 	</select>
 
-
-   <insert id="insert" parameterType="com.oraclejava.react.api.model.Movie">
-      insert into movie(movie_id, title, price, synopsis, movie_picture)
-      values (movie_seq.nextval, #{title}, #{price}, #{synopsis},  #{movie_picture, jdbcType=VARCHAR})
-   </insert>
-
-	<select id="findById" parameterType="int" resultType="com.oraclejava.react.api.model.Movie" >
-	select movie_id, title, price,synopsis,movie_picture from movie 
-	where movie_id = #{id}
+	<!-- 제목이나 줄거리 검색 -->
+	<select id="search"
+		parameterType="string"
+		resultType="com.oraclejava.react.api.model.Movie">
+		select movie_id, title, price from movie
+		where title like '%' || #{keyword} || '%'
+				or synopsis like '%' || #{keyword} || '%'
+		order by title
 	</select>
 
+
+   
+   <!-- 이미지 추가 없이도 영화등록 가능하게 함 -->
+   <insert id="insert" parameterType="com.oraclejava.react.api.model.Movie">
+      insert into movie(movie_id
+      , title
+      , price
+      , synopsis 
+      <if test ="movie_picture !=null"> 
+     , movie_picture
+      </if>
+      )
+      values (movie_seq.nextval
+      , #{title }
+      , #{price }
+      , #{synopsis }
+      <if test ="movie_picture !=null"> 
+       , #{movie_picture }
+        </if>
+        )
+   </insert>
+   
+<!--    <insert id="insert" parameterType="com.oraclejava.react.api.model.Movie"> -->
+<!-- 	insert into movie(movie_id, title, price, synopsis -->
+<!-- 	<if test="movie_picture != null"> -->
+<!-- 	,movie_picture -->
+<!-- 	</if> -->
+<!-- 	) -->
+<!-- 	values(movie_seq.nextval, #{title}, #{price}, #{synopsis} -->
+<!-- 	<if test="movie_picture != null"> -->
+<!-- 	,#{movie_picture} -->
+<!-- 	</if> -->
+<!-- 	) -->
+<!-- 	</insert> -->
+
+	<select id="findById" parameterType="int" resultType="com.oraclejava.react.api.model.Movie" >
+	select movie_id, title, price, synopsis, movie_picture 
+	from movie 
+	where movie_id = #{id }
+	</select>
+
+<!-- 	<update id="update" parameterType="com.oraclejava.react.api.model.Movie"> -->
+<!-- 		update movie set title = #{title}, price=#{price}, synopsis= #{synopsis}, movie_picture= #{movie_picture, jdbcType=VARCHAR} -->
+<!-- 		where movie_id = #{movie_id} -->
+<!-- 	</update> -->
+	
+	<update id="update" parameterType="com.oraclejava.react.api.model.Movie">
+		update movie set title = #{title }
+		, price=#{price }
+ 		, synopsis= #{synopsis}
+ 		<if test ="movie_picture !=null"> 
+		, movie_picture= #{movie_picture }
+ 		</if>
+ 		where movie_id = #{movie_id }
+ 	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete movie where movie_id = #{movie_id } 
+	</delete>
 	
 </mapper>
+
+
+
+
+
+
+

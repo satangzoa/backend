@@ -15,13 +15,35 @@ public class MovieRepository {
 		return sqlSession.selectList("movie.list");
 	}
 	
+	 public List<Movie> search(String keyword) {
+			return sqlSession.selectList("movie.search",keyword);
+		}
+	
 	public void insert(Movie movie) { //void는 return 값이 없다
 		sqlSession.insert("movie.insert" , movie);
 	}
 	
-	public Movie findById(int movid_id) {
-		return sqlSession.selectOne("movie.findById", movid_id);
+	public Movie findById(int id) {
+		return sqlSession.selectOne("movie.findById", id);
 	}
+	
+	public void update(Movie movie) {
+		sqlSession.update("movie.update",movie);
+	}
+	
+
+
+  public void delete(Movie movie) {
+		sqlSession.update("movie.delete", movie.getMovie_id());
+	}
+	
+//	public void delete(int id) { 
+//		sqlSession.delete("movie.delete" ,id);
+//	}
+	
+  
+
+ 
 }
 
 
